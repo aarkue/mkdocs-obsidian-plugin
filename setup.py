@@ -25,7 +25,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'mkdocs.plugins': [
-            'roamlinks = mkdocs_roamlinks_plugin.plugin:RoamLinksPlugin',
+            'obsidian = mkdocs_obsidian_plugin.plugin:ObsidianPlugin',
         ]
     }
 )
