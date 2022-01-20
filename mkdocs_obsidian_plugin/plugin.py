@@ -30,7 +30,7 @@ ROAMLINK_RE = r'\[\[(([^\]#\|]*)(#[^\|\]]+)*(\|[^\]]*)*)\]\]'
 # Or ==marks== or *italics*
 # And even code: `Hello`
 # ```
-ADMONITION_RE = r'`{3}\+?( ?)ad-(?P<type>\w+)\n(title:( ?)(?P<title>[\w ]+))?(?P<content>.*?)\n`{3}'
+ADMONITION_RE = r'`{3}\+?( ?)ad-(?P<type>\w+)\n(title:( ?)(?P<title>[\w ]+)\n)?(collapse: (?P<collapse>closed|open))?(?P<content>.*?)\n`{3}'
 
 class AutoLinkReplacer:
     def __init__(self, base_docs_url, page_url):
@@ -157,8 +157,7 @@ class AdmonitionReplacer:
     def __call__(self, match):
         match_dict = match.groupdict()
         replacement_content = "\t" + match_dict.get('content','').replace("\n","\n\t");
-        print("MATCH",replacement_content.replace("\t","t"))
-        return f'!!! {match_dict.get("type","note")} "{match_dict.get("title","")}"\n{replacement_content}'
+        return f'{("???" if match_dict.get("collapse") != "open" else "???+") if "collapse" in match_dict and match_dict.get("collapse") != None else "!!!"} {match_dict.get("type","note")} "{match_dict.get("title","")}"\n{replacement_content}'
 
 
 
@@ -175,7 +174,6 @@ class ObsidianPlugin(BasePlugin):
 
         # Getting the page url that we are linking from
         page_url = page.file.src_path
-
         # Look for matches and replace
         markdown = re.sub(AUTOLINK_RE,
                           AutoLinkReplacer(base_docs_url, page_url), markdown)
