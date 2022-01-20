@@ -20,6 +20,18 @@ AUTOLINK_RE = r'\[([^\]]+)\]\((([^)/]+\.(md|png|jpg))(#.*)*)\)'
 ROAMLINK_RE = r'\[\[(([^\]#\|]*)(#[^\|\]]+)*(\|[^\]]*)*)\]\]'
 
 
+# Admonition:
+# Example:
+# ```ad-note
+# title: Test Title
+# Hello!
+# In here you can use Markdown:
+# ## Header
+# Or ==marks== or *italics*
+# And even code: `Hello`
+# ```
+ADMONITION_RE = r'`{3}\+?( ?)ad-(?P<type>\w+)\n(title:( ?)(?P<title>[\w ]+))?(?P<content>.*?)\n`{3}'
+
 class AutoLinkReplacer:
     def __init__(self, base_docs_url, page_url):
         self.base_docs_url = base_docs_url
@@ -137,8 +149,20 @@ class RoamLinkReplacer:
 
         return link
 
+class AdmonitionReplacer:
+    def __init__(self, base_docs_url, page_url):
+        self.base_docs_url = base_docs_url
+        self.page_url = page_url
 
-class RoamLinksPlugin(BasePlugin):
+    def __call__(self, match):
+        match_dict = match.groupdict()
+        replacement_content = "\t" + match_dict.get('content','').replace("\n","\n\t");
+        print("MATCH",replacement_content.replace("\t","t"))
+        return f'!!! {match_dict.get("type","note")} "{match_dict.get("title","")}"\n{replacement_content}'
+
+
+
+class ObsidianPlugin(BasePlugin):
     def on_page_markdown(self,
                          markdown,
                          page,
@@ -157,5 +181,6 @@ class RoamLinksPlugin(BasePlugin):
                           AutoLinkReplacer(base_docs_url, page_url), markdown)
         markdown = re.sub(ROAMLINK_RE,
                           RoamLinkReplacer(base_docs_url, page_url), markdown)
-
+        markdown = re.sub(ADMONITION_RE,
+                          AdmonitionReplacer(base_docs_url, page_url), markdown, flags=re.DOTALL)
         return markdown

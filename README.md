@@ -1,14 +1,14 @@
-# MkDocs Roamlinks Plugin
+# MkDocs Obsidian Plugin
+This is a fork of the [MkDocs Roamlinks Plugin](https://github.com/Jackiexiao/mkdocs-roamlinks-plugin) with added support for the custom admonition type for the syntax used in [Obsidian Admonition](https://github.com/valentine195/obsidian-admonition).
+
+
+
 
 An MkDocs plugin that simplifies relative linking between documents and convert [[roamlinks]] for [vscode-foam](https://github.com/foambubble/foam) & [obsidian](https://obsidian.md) 
 
 ## Setup 
 
-Install the plugin using pip:
-
-`pip install mkdocs-roamlinks-plugin`
-
-Activate the plugin in `mkdocs.yml`:
+Install the plugin and activate the plugin in `mkdocs.yml`:
 ```yaml
 plugins:
   - search

@@ -1,14 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='mkdocs-roamlinks-plugin',
+    name='mkdocs-obsidian-plugin',
     version='0.1.3',
     description='An MkDocs plugin',
-    long_description='An MkDocs plugin that automagically generates relative links and convert roamlike links for foam and obsidian between markdown pages',
+    long_description='An MkDocs plugin to use obsidian features with MkDocs',
     keywords='mkdocs',
-    url= 'https://github.com/Jackiexiao/mkdocs-roamlinks-plugin',
-    author='jackiexiao',
-    author_email='707610215@qq.com',
+    url= 'https://github.com/aarkue/mkdocs-obsidian-plugin',
+    author='aarkue',
     license='MIT',
     python_requires='>=3.6',
     install_requires=[
