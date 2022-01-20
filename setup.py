@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='mkdocs-obsidian-plugin',
-    version='0.1.3',
+    version='0.2.0',
     description='An MkDocs plugin',
     long_description='An MkDocs plugin to use obsidian features with MkDocs',
     keywords='mkdocs',
